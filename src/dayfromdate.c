@@ -10,7 +10,8 @@ const char* getDay(int day);
 const char* getMonthName(int month);
 
 struct dateCoords {
-  unsigned int s_century: 7, s_year: 7, s_month: 3, s_day: 5;
+  unsigned int s_century: 7, s_year: 7, s_month: 7, s_day: 7;
+  //unsigned int s_century: 7, s_year: 7, s_month: 3, s_day: 5; // this did not work to prevent errors
 };
 
 struct dateCoords const stringToStruct (char inputstring[8]) {
