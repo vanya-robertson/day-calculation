@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const struct dateCoords stringToStruct(char inputstring[10]); // returns struct of century, year, month and day
+const struct dateCoords stringToStruct(char inputstring[8]); // returns struct of century, year, month and day
 const struct monthCoords getMonthCodeAndLength(int month,int isleapyear); // returns struct of month code and month length
 const int isJulian(struct dateCoords input, struct dateCoords endJulian, struct dateCoords startGregorian); // returns 0 if Gregorian, 1 if Julian, 2 if invalid
 const int isLeapYear(struct dateCoords input, int isjulian); // returns 0 if is leap year, 1 if is not
@@ -13,9 +13,9 @@ struct dateCoords {
   unsigned int s_century: 7, s_year: 7, s_month: 3, s_day: 5;
 };
 
-struct dateCoords const stringToStruct (char inputstring[10]) {
-  unsigned int day = 10 * (inputstring[8] - '0') + (inputstring[9] - '0');
-  unsigned int month = 10 * (inputstring[5] - '0') + (inputstring[6] - '0');
+struct dateCoords const stringToStruct (char inputstring[8]) {
+  unsigned int day = 10 * (inputstring[6] - '0') + (inputstring[7] - '0');
+  unsigned int month = 10 * (inputstring[4] - '0') + (inputstring[5] - '0');
   unsigned int century = 10 * (inputstring[0] - '0') + (inputstring[1] - '0');
   unsigned int year = 10 * (inputstring[2] - '0') + (inputstring[3] - '0');
   struct dateCoords inputDate = {century, year, month, day};
@@ -177,25 +177,21 @@ int main(int argc, char **argv){
 
   // check input from stdin
   if (argc == 1) {
-    printf("Error: There must be one argument in the format \"yyyy-MM-dd\"\n");
+    printf("Error: There must be one argument in the format \"yyyyMMdd\"\n");
     exit(1);
   }
   else if (argc > 2) {
-    printf("Error: There must only be one argument in the format \"yyyy-MM-dd\"\n");
+    printf("Error: There must only be one argument in the format \"yyyyMMdd\"\n");
     exit(1);
   }
-  else if (strlen(dateStr) > 10) {
-    printf("Error: There must be one argument in the format \"yyyy-MM-dd\"\n");
-    exit(1);
-  }
-  else if ((dateStr[4] != '-') || (dateStr[7] != '-')) {
-    printf("Error: There must be one argument in the format \"yyyy-MM-dd\"\n");
+  else if (strlen(dateStr) > 8) {
+    printf("Error: There must be one argument in the format \"yyyyMMdd\"\n");
     exit(1);
   }
 
   struct dateCoords inputDate = stringToStruct(dateStr);
-  struct dateCoords endJulian = stringToStruct("1752-09-02");
-  struct dateCoords startGregorian = stringToStruct("1752-09-14");
+  struct dateCoords endJulian = stringToStruct("17520902");
+  struct dateCoords startGregorian = stringToStruct("17520914");
   const int isjulian = isJulian(inputDate, endJulian, startGregorian);
   const int isleapyear = isLeapYear(inputDate, isjulian);
 
