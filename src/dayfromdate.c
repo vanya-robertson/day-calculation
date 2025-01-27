@@ -184,7 +184,7 @@ int main(int argc, char **argv){
     printf("Error: There must only be one argument in the format \"yyyy-MM-dd\"\n");
     exit(1);
   }
-  else if (strlen(dateStr) > 10) {
+  else if (strlen(dateStr) != 10) {
     printf("Error: There must be one argument in the format \"yyyy-MM-dd\"\n");
     exit(1);
   }
